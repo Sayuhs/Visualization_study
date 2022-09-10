@@ -1,0 +1,48 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>你干嘛哎呦</title>
+    <!-- 引入 echarts.js -->
+    <script src="https://cdn.staticfile.org/echarts/4.7.0/echarts.min.js"></script>
+</head>
+<body>
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    <div id="main" style="width: 600px;height:400px;"></div>
+    <script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main'));
+
+        const option={
+            xAxis:{
+                data:['html','js','css','canvas'],
+                boundaryGap:0
+            },
+            yAxis:{
+
+            },
+            series:{
+                type:'line',
+                data:[30,20,40,100],
+                smooth:true, //折线是否平滑
+                itemStyle:{
+                    color:'#00acec'
+                },
+                areaStyle:{
+                    color:'#00acec',
+                    opacity:0.2
+                },
+                symbolSize:25,   //设置标记点大小
+                symbol:'image://./hs.jpg'  //设置标记点形状   circle  roundRect triangle diamond pin arrow none
+                //也可以 给个图片 'image://url'  或者svg  'path://..........'
+            }
+        }
+ 
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    </script>
+</body>
+</html>
+
+ 

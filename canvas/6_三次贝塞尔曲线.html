@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+         #canvas{
+            background-color:antiquewhite;
+        }
+    </style>
+</head>
+<!-- 
+    三次贝塞尔曲线是一种三次曲线，它可以向两个方向弯曲，由四个点来定义：两个锚点及两个控制点，控制点用来控制曲线的形状。
+ -->
+<body>
+    <canvas id="canvas" width="1000" height="800"></canvas>
+</body>
+<script>
+    /** @type {HTMLCanvasElement} */  
+    //默认使用canvas是没有代码提示的，这个时候可以添加上面这行就可以解决 
+     //画布
+    const canvas=document.getElementById('canvas')
+    canvas.width=800
+    canvas.height=500
+    //获取画笔  ( 就是建立一个二维渲染上下文)
+    const ctx=canvas.getContext('2d');
+
+    //辅助线  帮助理解的
+    ctx.beginPath() 
+    ctx.moveTo(50,50)
+    ctx.lineTo(400,50)
+    ctx.lineTo(400,200)
+    ctx.lineTo(700,200)
+    ctx.stroke()
+
+    ctx.beginPath() 
+    ctx.strokeStyle="#fc5531";
+    ctx.moveTo(50,50)
+    // cp1x 	第一个贝塞尔控制点的 x 坐标
+    // cp1y 	第一个贝塞尔控制点的 y 坐标
+    // cp2x 	第二个贝塞尔控制点的 x 坐标
+    // cp2y 	第二个贝塞尔控制点的 y 坐标
+    // x 	结束点的 x 坐标
+    // y 	结束点的 y 坐标
+    ctx.bezierCurveTo(
+        400,50,
+        400,200,
+        700,200
+    )
+    ctx.stroke()
+
+
+</script>
+</html>

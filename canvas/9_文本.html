@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+         #canvas{
+            background-color:antiquewhite;
+        }
+    </style>
+</head>
+<!-- 
+    文本 绘制方法有两种  填充文字和描边文字  
+    填充文字 fillText(text,x,y,maxWidth)  text文字内容  x,y 文字位置  
+                maxWidth最大宽(文字内容超过最大宽会压缩文字,不超过则没有变化)
+    描边文字 strokeText(text,x,y,maxWidth)
+
+    获取文字宽度的方法 ctx.measureText(text)
+ -->
+<body>
+    <canvas id="canvas" width="1000" height="800"></canvas>
+</body>
+<script>
+    /** @type {HTMLCanvasElement} */  
+    //默认使用canvas是没有代码提示的，这个时候可以添加上面这行就可以解决 
+     //画布
+    const canvas=document.getElementById('canvas')
+    canvas.width=1000
+    canvas.height=800
+    //获取画笔  ( 就是建立一个二维渲染上下文)
+    const ctx=canvas.getContext('2d');
+    //设置字体属性   顺序不能错
+    ctx.font='bold 50px arial'
+   const text='你干嘛啊哈哈哎呦'
+   ctx.fillStyle='pink'
+   ctx.fillText(text,100,200)  //填充文本
+
+
+   const text2='迎面走来的你让我如此蠢蠢欲动'
+   ctx.strokeStyle='red'
+   //获取文字宽度
+   const {width}=ctx.measureText(text2)
+   ctx.strokeText(text2,100,300,width/2)  //填充文本
+   //ctx.strokeText(text2,100,400,width*2) 
+   //这里宽度/2  就会压缩文字  *2不会让文字变宽
+
+
+   //文字对齐
+   const text3='鸡你实在是太美'
+   const [x,y]=[canvas.width/2,canvas.height/2]
+   ctx.fillStyle='black'
+   ctx.fillRect(x,y,8,8)  //辅助点  要求文字基于这个点垂直水平居中
+   //字体
+   ctx.font='bold 100px arial'
+   /*   ctx.textAlign有五个值可以取  分别是
+start 	默认。文本在指定的位置开始。
+end 	文本在指定的位置结束。
+center 	文本的中心被放置在指定的位置。
+left 	文本在指定的位置开始。
+right 	文本在指定的位置结束。
+   */
+   ctx.textAlign="center"  //水平居中
+   /*   ctx.textBaseline有五个值可以取  分别是
+alphabetic 	默认。文本基线是普通的字母基线。
+top 	文本基线是 em 方框的顶端。。
+hanging 	文本基线是悬挂基线。
+middle 	文本基线是 em 方框的正中。
+ideographic 	文本基线是表意基线。
+bottom 	文本基线是 em 方框的底端。
+   */
+   ctx.textBaseline="middle"  //垂直居中
+   ctx.lineWidth=3;
+   ctx.strokeStyle='red'
+   const {width2}=ctx.measureText(text3)
+   ctx.strokeText(text3,x,y,width2)
+
+</script>
+</html>

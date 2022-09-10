@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+         #canvas{
+            background-color:antiquewhite;
+        }
+    </style>
+</head>
+<!-- 
+    本节建议画图 额,扇形没学好真费劲
+ -->
+<body>
+    <canvas id="canvas" width="1000" height="800"></canvas>
+</body>
+<script>
+    /** @type {HTMLCanvasElement} */  
+    //默认使用canvas是没有代码提示的，这个时候可以添加上面这行就可以解决 
+     //画布
+    const canvas=document.getElementById('canvas')
+    canvas.width=400
+    canvas.height=400
+    //获取画笔  ( 就是建立一个二维渲染上下文)
+    const ctx=canvas.getContext('2d');
+   
+    // ----获取鼠标在画布上的坐标
+    /*
+   canvas.addEventListener('mousedown',getPos)
+   function getPos(event){
+    //鼠标在窗口的位置 
+    const {clientX,clientY}=event
+    //获取canvas在窗口中的位置 left top 使用getBoundingClientRect方法
+    const{left,top}=canvas.getBoundingClientRect()
+    //鼠标在canvas的位置=鼠标在窗口轴的位置-canvas在窗口的位置
+    const [x,y]=[clientX-left,clientY-top]
+    console.log(x,y);
+   }
+   */
+
+   //选择扇形 我们要知道 圆心位置 半径 起始弧度 结束弧度
+
+   //创建扇形对象
+   class Sector{
+   
+    constructor(r=200,startAngle=0,endAngle=Math.PI/2,color='pink'){
+        this.r=r
+        this.startAngle=startAngle
+        this.endAngle=endAngle
+        this.color=color
+        this.x=0
+        this.y=0
+    }
+    draw(ctx){
+        const {x,y,r,startAngle,endAngle,color}=this //结构出属性
+
+        ctx.save()
+        ctx.beginPath()
+        ctx.moveTo(x,y)  //从起始圆心位置绘制 形成扇形
+        ctx.arc(x,y,r,startAngle,endAngle)
+        ctx.fillStyle=color
+        ctx.fill()
+        ctx.restore()
+
+    }
+   }
+   const item=new Sector()
+   item.x=canvas.width/4
+   item.y=canvas.height/4
+   item.draw(ctx)
+   
+   //注意 图形无法监听事件 所以我们将事件 写在画布上面
+   canvas.addEventListener('mousedown',(event)=>{
+    const mousePos=getPos(event)
+    //x的鼠标位置-y的圆心位置 y也同理  这样就得到了这个点垂直于半径的高 和垂直点和圆心之间的线段  这两条直线x和y  
+    const delta={
+        x:mousePos.x-item.x,
+        y:mousePos.y-item.y
+    }
+    const {x,y}=delta //x 和 y 相当于两个直角边 下面开方就算出了斜边(也就是鼠标点和圆心的距离)
+    const len=Math.sqrt(x*x+y*y)
+    //判断这个鼠标的位置 到圆心的距离是不是小于半径 (通俗就是在不在这个扇形所在的同圆心圆形面积内  无视弧度的说)
+    const mouseboolean=len<item.r
+
+    //鼠标到圆心的弧度 是否在起始弧度和结束弧度之间 (通俗就是在不在这个扇形区间内  无视距离的说)
+    //Math.atan2() 返回从原点 (0,0) 到 (x,y) 点的线段与 x 轴正方向之间的平面角度 (弧度值)
+    const dir=Math.atan2(y,x)
+    const mouseboolean2=dir>item.startAngle&&dir<item.endAngle
+
+    //只有满足mousebolean和mouseboolean2才能确定当前鼠标是在扇形范围内
+    const mousebooleanAll=mouseboolean&&mouseboolean2
+
+    if(mousebooleanAll){
+        //在扇形内就更改颜色
+        console.log('在扇形内');
+        item.color='#00acec'
+    }else{
+        console.log('不在');
+        item.color='pink'
+    }
+    item.draw(ctx)
+   })
+   function getPos(event){
+    //鼠标在窗口的位置 
+    const {clientX,clientY}=event
+    //获取canvas在窗口中的位置 left top 使用getBoundingClientRect方法
+    const{left,top}=canvas.getBoundingClientRect()
+    //鼠标在canvas的位置=鼠标在窗口轴的位置-canvas在串口的位置
+    const [x,y]=[clientX-left,clientY-top]
+    return {x,y}
+   }
+</script>
+</html>

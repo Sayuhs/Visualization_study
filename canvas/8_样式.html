@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+         #canvas{
+            background-color:antiquewhite;
+        }
+    </style>
+</head>
+<!-- 
+   图形的着色区域有两种  描边区域和填充区域
+   strokeStyle代表了描边样式  绘制方法有 stroke() strokeRect()或者strokeText()
+   fillStyle代表了填充样式  绘制方法有fill() fillRect()或者fillText()
+ -->
+<body>
+    <canvas id="canvas" width="1000" height="800"></canvas>
+</body>
+<script>
+    /** @type {HTMLCanvasElement} */  
+    //默认使用canvas是没有代码提示的，这个时候可以添加上面这行就可以解决 
+     //画布
+    const canvas=document.getElementById('canvas')
+    canvas.width=800
+    canvas.height=600
+    //获取画笔  ( 就是建立一个二维渲染上下文)
+    const ctx=canvas.getContext('2d');
+
+    ctx.beginPath()
+    ctx.rect(50,50,400,200)
+    //设置线宽
+    ctx.lineWidth=5
+    //设置描边颜色
+    ctx.strokeStyle='#f0f'
+    ctx.stroke()
+
+
+    //可以实现重叠叠加的效果
+
+    ctx.fillStyle='rgba(255,0,0,0.5)'
+    ctx.beginPath()
+    ctx.rect(50,300,400,200)
+    ctx.fill()
+
+    ctx.beginPath()
+    ctx.rect(100,350,400,200)
+    ctx.fill()
+ 
+
+
+</script>
+</html>

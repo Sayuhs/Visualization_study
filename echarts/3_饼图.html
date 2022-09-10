@@ -1,0 +1,61 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>你干嘛哎呦</title>
+    <!-- 引入 echarts.js -->
+    <script src="https://cdn.staticfile.org/echarts/4.7.0/echarts.min.js"></script>
+</head>
+<body>
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    <div id="main" style="width: 600px;height:400px;"></div>
+    <script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main'));
+
+        const option={
+            // xAxis:{
+            //     data:['html','js','css','canvas'],
+            //     boundaryGap:0
+            // },
+            // yAxis:{
+
+            // },   饼图就不需要这俩了
+            series:{
+                type:'pie',
+                data:[
+                    {name:'html',value:'200'}, //name 是名称 value是值 固定是对象格式
+                    {name:'css',value:'240'},
+                    {name:'js',value:'300'},
+                    {name:'vue',value:'400'}
+                ],
+                roseType:'radius', //玫瑰图  基于半径 就是半径越大玫瑰花瓣越大
+               // 或者  area 基于面积的
+               //radius:'40%'  //设置半径  或者写一个数组就变成了圆环
+               radius:["40%","80%"],  //内环40% 外环80%
+               //可以设置半圆的颜色  但是不设置他有默认的颜色
+               itemStyle:{
+                color:'pink'
+               }
+            },
+
+            //视觉映射  最大值max  最小值min inRange定义在选中范围的视觉元素  colorLightness [0,1]亮度
+            //  也会出现一个调节器
+            visualMap:{
+                //会和下面的系列数据相互对应
+                min:100,
+                max:500,
+                inRange:{
+                    colorLightness:[0.2,0.8]
+                }
+            }
+        }
+ 
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    </script>
+</body>
+</html>
+
+ 

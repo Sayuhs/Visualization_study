@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #canvas{
+            background-color:antiquewhite;
+            /* width: 300px;
+            height: 300px; */
+        }
+    </style>
+</head>
+<!-- canvas 可以绘制出 直线 圆弧 切线圆弧 二次贝塞尔曲线 三次贝塞尔曲线 矩形 
+直线: lineTo(k,y); lineTo(x,y); lineTo(x,y);
+圆弧: arc(x,y,半径,开始弧度,结束弧度,方向)
+切线圆弧: arcTo(x1,y1,x2,y2,半径)
+二次贝塞尔曲线: quadraticCurveTo(cpx1,cpy1,x,y)
+三次贝塞尔曲线: bezierCurveTo(cpx1,cpy1,cpx2,cpy2,x,y)
+矩形: rect(x,y,w,h)
+-->
+<body>
+    <canvas id="canvas" height="100" height="100"></canvas>
+</body>
+<script>
+    /** @type {HTMLCanvasElement} */  
+    //默认使用canvas是没有代码提示的，这个时候可以添加上面这行就可以解决 
+    
+    //画布
+    const canvas=document.getElementById('canvas')
+    //注意 canvas标签内必须有height和width属性才可以进行修改
+    // 设置的宽高优先级 css > js > 标签内部的
+    canvas.height=300;
+    canvas.width=300;
+    //获取画笔  ( 就是建立一个二维渲染上下文)
+    const ctx=canvas.getContext('2d');
+    
+    //三种矩形
+    
+    /*   参数从左至右依次是  x矩形左上角的x坐标  y矩形左上角的y坐标
+         width矩形的宽度，以像素计 height矩形的高度，以像素计
+    */
+    ctx.fillRect(0,0,50,50)//填充矩形
+
+
+    //描边样式
+    ctx.strokeStyle="pink";
+    //设置线宽
+    ctx.lineWidth=5
+    ctx.strokeRect(0,0,canvas.width,canvas.height) //描边矩形  注意先后顺序 一定要设置样式写在创建描边矩形前面
+
+
+    ctx.clearRect(15,15,20,20)  //清除当前画布上画上的颜色 类似于橡皮擦的概念  
+</script>
+</html>

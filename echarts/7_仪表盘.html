@@ -1,0 +1,62 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>你干嘛哎呦</title>
+    <!-- 引入 echarts.js -->
+    <script src="https://cdn.staticfile.org/echarts/4.7.0/echarts.min.js"></script>
+</head>
+<body>
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    <div id="main" style="width: 600px;height:400px;"></div>
+    <script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main'));
+
+        const option={
+            title: {
+                text: '仪表盘',
+            },
+            /*
+             仪表盘 gauge
+             type 图表类型
+             detail 仪表盘详情
+             data 数据  [{name,value}] 
+            */
+            series:{
+                id:1,
+                type:'gauge',
+                detail:{
+                    formatter:"{value}%"   //反正就是 {value}这种语法
+                },
+                data:[
+                    {name:'速度',value:70}
+                ]
+            },
+        }
+ 
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+
+        //速度变化 考虑过按钮更改数据实现响应式 但是好像echarts本身响应式封装好了 但我不知道更改数据后如何让echarts检测到
+        //不过实际项目中 都是接口传递来的数据然后动态赋值给data
+        setInterval(function(){
+            myChart.setOption(
+            {
+               title: {
+                   text: '仪表盘',
+               },
+               series:{
+                   id:1,
+                   data:[
+                       {name:'速度',value:Math.round(Math.random()*100)}
+                   ]
+               },
+            });
+        },1000)
+    </script>
+</body>
+</html>
+
+ 

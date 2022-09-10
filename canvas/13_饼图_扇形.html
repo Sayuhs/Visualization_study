@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+         #canvas{
+            background-color:antiquewhite;
+        }
+    </style>
+</head>
+<!-- 
+   饼图的核心内容  1扇形 2引导线+标签文字 3提示框 4鼠标划入划出的事件
+ -->
+<body>
+    <canvas id="canvas" width="1000" height="800"></canvas>
+</body>
+<script>
+    /** @type {HTMLCanvasElement} */  
+    //默认使用canvas是没有代码提示的，这个时候可以添加上面这行就可以解决 
+     //画布
+    const canvas=document.getElementById('canvas')
+    canvas.width=800
+    canvas.height=800
+    //获取画笔  ( 就是建立一个二维渲染上下文)
+    const ctx=canvas.getContext('2d');
+   
+    // ----获取鼠标在画布上的坐标
+    /*
+   canvas.addEventListener('mousedown',getPos)
+   function getPos(event){
+    //鼠标在窗口的位置 
+    const {clientX,clientY}=event
+    //获取canvas在窗口中的位置 left top 使用getBoundingClientRect方法
+    const{left,top}=canvas.getBoundingClientRect()
+    //鼠标在canvas的位置=鼠标在窗口轴的位置-canvas在串口的位置
+    const [x,y]=[clientX-left,clientY-top]
+    console.log(x,y);
+   }
+   */
+
+   //选择扇形 我们要知道 圆心位置 半径 起始弧度 结束弧度
+
+   //创建扇形对象
+   class Sector{
+   
+    constructor(r=200,startAngle=0,endAngle=Math.PI/2,color='pink'){
+        this.r=r
+        this.startAngle=startAngle
+        this.endAngle=endAngle
+        this.color=color
+        this.x=0
+        this.y=0
+        this.p1={x:0,y:0,d:20} //引导线与扇形弧边的交点  d是偏移距离 基于圆心 偏移20
+        this.p2={x:0,y:0,d:50}  //基于圆心 偏移50
+        this.p3={x:0,y:0,d:20}   //基于p2 偏移20
+        this.p4={x:0,y:0,d:10}  //基于p3  偏移10
+        this.textAlign='left'  //文字位置
+        this.text='啊哈哈鸡汤来喽'  //标签文字
+    }
+    draw(ctx){
+        const {x,y,r,startAngle,endAngle,color,p1,p2,p3,p4,text,textAlign}=this //解构出属性
+
+        ctx.save()
+        //扇形
+        ctx.beginPath()
+        ctx.moveTo(x,y)  //从起始圆心位置绘制 形成扇形
+        ctx.arc(x,y,r,startAngle,endAngle)
+        ctx.fillStyle=color
+        ctx.fill()
+        //引导线
+        ctx.beginPath()
+        ctx.moveTo(x,y) //起点是圆心
+        ctx.lineTo(p1.x,p1.y)//p1终点
+        ctx.lineTo(p2.x,p2.y)
+        ctx.lineTo(p3.x,p3.y)
+        ctx.strokeStyle="red";
+        ctx.stroke(); 
+        //文字
+        ctx.font='bold 18px arail'
+        ctx.textAlign=textAlign
+        ctx.textBaseline="middle"  //垂直居中
+        ctx.fillStyle='#2c7fc5'
+        ctx.fillText(text,p4.x,p4.y)
+        ctx.restore()
+
+    }
+
+    //更新引导线点位
+    updatePoints(){
+        const {r,startAngle,endAngle,x,y,p1,p2,p3,p4}=this
+
+         //求p1点的x点位    
+        const dir=startAngle+(endAngle-startAngle)/2  //引导线的弧度方向
+        const l1=r+p1.d  //p1到圆心的距离
+        //余弦=邻边(p1.x)/斜边(l1)  建议看图 我嘴笨说不清
+        p1.x=Math.cos(dir)*l1+x;
+        //求p1的y点位    正弦=对边(p1.y)/斜边(l1)
+        p1.y=Math.sin(dir)*l1+y;
+        
+        //求p2点的点位
+        const l2=r+p2.d  
+        p2.x=Math.cos(dir)*l2+x;
+        p2.y=Math.sin(dir)*l2+y;
+
+
+        //求p3点的点位  这个有个规范 如果p1点在圆心右侧 则p3是向右偏移  在左侧就向左偏移
+        let n=1; //偏移方式的辅助变量
+        if(p1.x>x){
+            //在圆心右侧  
+            this.textAlign='left' //则文字对齐方式改为靠右
+            n=1
+        }else{
+            this.textAlign='right'
+            n=-1
+        }
+        p3.x=p2.x+p3.d*n  // 右侧n就是+1 这样p3.x也就是正数  左侧-1 p3.y也就是负数
+        p3.y=p2.y
+
+        //求p4的点位
+        p4.x=p3.x+p4.d*n
+        p4.y=p2.y
+    }
+   }
+
+   //实例化扇形
+   const item=new Sector()
+   item.endAngle=Math.PI*3/2
+   item.x=canvas.width/4+150
+   item.y=canvas.height/4+100
+   item.updatePoints() //更新点位
+   item.draw(ctx)
+   
+</script>
+</html>

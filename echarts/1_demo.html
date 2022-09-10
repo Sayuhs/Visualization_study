@@ -1,0 +1,130 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>第一个 ECharts 实例</title>
+    <!-- 引入 echarts.js -->
+    <script src="https://cdn.staticfile.org/echarts/4.7.0/echarts.min.js"></script>
+</head>
+<body>
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    <div id="main" style="width: 600px;height:400px;"></div>
+    <script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main'));
+         /* 指定图标的option选项 配置项和数据
+        xAxis  x轴()  data 类目数据
+        yAxis  y轴()  
+        series 系列列表   type 图表类型  data 数据与xAxis.data相对应
+        */
+        // 指定图表的配置项和数据
+        var option = {
+            title: {
+                text: 'ECharts Demo',
+                subtext:'我是副标题',
+                left:'center',  //位置显示 居中
+                textStyle:{       //标题样式设置
+                    color:'maroon',
+                    fontSize:24 
+                },
+                subtextStyle:{   //副标题样式设置
+                    color:'orange'  
+                },
+                //  show:false  每个配置项都有 控制显示与隐藏的
+            },
+            tooltip: {
+                //  提示框组件，用于配置鼠标滑过或点击图表时的显示框  即使内部什么都不写只要定义就会有显示框了
+            },
+            grid:{
+                //绘图区域 设置在容器的边距
+            },
+            legend: {
+                //data[]  图例的数据 每一项代表一个系列的name  即为和series中某一个对象的name对应 要求name一样
+                data:['危险指数','智慧指数'],
+                left:'left'
+            },
+            /*
+            toolbox 工具栏  真强大!!!
+              feature{}工具配置项
+                 saveAsImage{}保存为图片
+                 dataView{}数据视图工具
+                 restore{}配置项还原
+                 dataZoom{}数据区域缩放
+                 magicType{}动态类型切换
+                    type[]动态类型
+                      line折线图
+                      bar柱状图
+                      stack堆叠
+                      tiled平铺
+            */
+            toolbox:{
+                feature:{
+                    saveAsImage:{},
+                    dataView:{},
+                    restore:{},
+                    dataZoom:{},
+                    magicType:{
+                        type:[
+                            'line','bar','stack','tiled'
+                        ]
+                    }
+                }
+            },
+            xAxis: {
+                boundaryGap:{},
+                name:'贵物们',
+                data: ["拐子","野浩","洪少","苍蝇","蛤蟆","玲玲"]
+            },
+            yAxis: {
+                name:'指数'
+            },
+            /*
+            /*系列列表series
+                列表类型type
+                系列名name，用于提示tooltip, 图例legend筛选，数据更新
+                数据data[]
+                标记点markpoint {}
+                     data [] 标记的数据数组
+                        {type:'max'} 最大值
+                        {type:'min'} 最小值
+                        {value:'值' ,coord:[x,y]}坐标位
+                标记线markLine
+                     data[]标记数据
+                     name名称
+                     type类型'average', 'min', 'max'
+                     coord点位
+            */
+            series: [  //这个也算是核心
+            {
+                name: '危险指数',
+                type: 'bar',  //柱状图  这里切换 line 
+                data: [5, 20, 36, 10, 10, 2],
+                markPoint:{
+                    data:[
+                        {type:'max'},
+                        {type:'min'},
+                        // {coord:[0,5]}  //注意是基于图表的坐标系 而不是页面的坐标系
+                    ]
+                },
+                markLine:{
+                    data:[
+                        {type:'average'}  //平均
+                    ]
+                }
+            },
+            {
+                name: '智慧指数',
+                type: 'bar',  //柱状图
+                data: [5, 30, 6, 10, 43, 1]
+            }
+            ]
+        };
+ 
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    </script>
+</body>
+</html>
+
+ 

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+         #canvas{
+            background-color:antiquewhite;
+        }
+    </style>
+</head>
+<!-- 
+   
+ -->
+<body>
+    <canvas id="canvas" width="1000" height="800"></canvas>
+</body>
+<script>
+    /** @type {HTMLCanvasElement} */  
+    //默认使用canvas是没有代码提示的，这个时候可以添加上面这行就可以解决 
+     //画布
+    const canvas=document.getElementById('canvas')
+    canvas.width=800
+    canvas.height=500
+    //获取画笔  ( 就是建立一个二维渲染上下文)
+    const ctx=canvas.getContext('2d');
+
+    ctx.beginPath() 
+    /*
+x 	矩形左上角的 x 坐标。
+y 	矩形左上角的 y 坐标。
+width 	矩形的宽度，以像素计。
+height 	矩形的高度，以像素计。
+    */ 
+    ctx.rect(0,0,200,200) 
+    ctx.stroke()  //描边的形式
+
+    ctx.beginPath() 
+    ctx.rect(200,200,200,200)
+    ctx.fillStyle='yellow' 
+    ctx.fill()  //填充形式
+
+
+
+</script>
+</html>

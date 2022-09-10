@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+         #canvas{
+            background-color:antiquewhite;
+        }
+    </style>
+</head>
+<!-- 类似于线的概念 -->
+<body>
+    <canvas id="canvas" width="1000" height="800"></canvas>
+</body>
+<script>
+    /** @type {HTMLCanvasElement} */  
+    //默认使用canvas是没有代码提示的，这个时候可以添加上面这行就可以解决 
+     //画布
+    const canvas=document.getElementById('canvas')
+    canvas.width=500
+    canvas.height=500
+    //获取画笔  ( 就是建立一个二维渲染上下文)
+    const ctx=canvas.getContext('2d');
+
+    //圆弧的绘制方向 默认是顺时针
+    ctx.beginPath()
+    //参数分别是 圆心的x位置 圆心的y位置  半径  起始弧度  结束弧度  是否顺时针
+    //弧的圆形的三点钟位置是 0 度  
+    //至于Math*PI  可以类似周长等于2PIr来理解   Math.PI*1就是从起始位置绕一个半圆
+    ctx.arc(200,200,100,0,Math.PI*1,true)
+    //ctx.arc(400,400,100,0,Math.PI*1,true)
+
+    ctx.moveTo(300+100,300)//要重新设置起点⭐ 不然末尾的点会和新的圆弧起始的点连接在一起
+    ctx.arc(300,300,100,0,Math.PI*1.5,false)
+    // moveTo起始位置  x要求是新的圆弧的x加上半径  y要求是新圆弧的y
+    //显示路径  以描边的方式
+    ctx.stroke()
+</script>
+</html>

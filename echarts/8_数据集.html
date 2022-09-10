@@ -1,0 +1,70 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>你干嘛哎呦</title>
+    <!-- 引入 echarts.js -->
+    <script src="https://cdn.staticfile.org/echarts/4.7.0/echarts.min.js"></script>
+</head>
+<!-- 数据集dataset  用于数据管理
+优点
+基于原始数据，设置映射关系，形成图表
+数据和配置分离 便于单独管理
+数据可以被多个系列或者组件复用  前面几节外部定义的data就可以当作数据源 
+支持更多的数据的常用格式，比如二维数组 对象数组等
+-->
+<body>
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    <div id="main" style="width: 600px;height:400px;"></div>
+    <script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main'));
+
+        //数据源
+        const source=[
+            ['大前端','学习人数','就业人数'],  //系列
+            ['koa2',300,200],  //下面就是数据
+            ['uniapp',200,300],
+            ['vue',340,610],
+            ['pinia',100,240],
+            ['react',200,310]
+        ]        //不过二维数组可以进行行映射(默认)或者列映射  但是映射 会根据映射来决定数据展示的行列数
+        //比如我们这里选择行映射  他就会展现索引[0,2]的数据
+
+        //不仅支持二维数组 还支持对象数组
+        // const source=[
+        //     {'大前端':'koa2','学习人数':300,'就业人数':200},
+        //     {'大前端':'uniapp','学习人数':200,'就业人数':300},
+        //     {'大前端':'vue','学习人数':340,'就业人数':610},
+        //     {'大前端':'pinia','学习人数':100,'就业人数':240},
+        //     {'大前端':'react','学习人数':200,'就业人数':310}
+        // ]
+        const option={
+            //数据源
+            dataset:{
+                source,
+                seriesLayoutBy:'row'  //column
+            },  //吐槽... 为啥只能叫source 我叫source2不行吗
+            tooltip:{},
+            xAxis:{
+                type:'category'  //类目轴
+            },
+            legend:{},
+            yAxis:{
+                type:'value'
+            },
+            series:[
+               {type:'bar'},
+               {type:'bar'}
+            ],
+        }
+ 
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+
+    </script>
+</body>
+</html>
+
+ 

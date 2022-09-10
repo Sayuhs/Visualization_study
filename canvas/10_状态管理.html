@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+         #canvas{
+            background-color:antiquewhite;
+        }
+    </style>
+</head>
+<!-- 
+    状态管理，管理的是上下文对象的状态。
+上下文对象的状态就是上下文对象的属性。比如描边颜色,填充颜色，投影,线条样式，变换信息...
+
+管理上下文状态的方法有两个:
+保存当前状态: save()
+恢复上一次保存的状态: restore()
+
+一般在我们绘制具备同一种样式的图形时,都会用save() restore()将其包裹起来。这是为了避免当前的图形样式影
+响以后所要绘制的的图形样式。
+ -->
+<body>
+    <canvas id="canvas" width="1000" height="800"></canvas>
+</body>
+<script>
+    /** @type {HTMLCanvasElement} */  
+    //默认使用canvas是没有代码提示的，这个时候可以添加上面这行就可以解决 
+     //画布
+    const canvas=document.getElementById('canvas')
+    canvas.width=1000
+    canvas.height=800
+    //获取画笔  ( 就是建立一个二维渲染上下文)
+    const ctx=canvas.getContext('2d');
+   
+    ctx.save() //保存这个上下文对象的状态  就是原始状态 然后下面进行更改 这里相当于备份 待会restore() 可以重新拥有这个状态
+    ctx.fillStyle='pink'  //绘制颜色在前    这时候就更改状态 已经备份了 不用担心
+    ctx.fillRect(100,200,300,200)
+    ctx.restore()  //恢复到之前备份的状态 这样下面的绘制就不会收到影响了 可以理解是让下面的语句回到上一个保存点
+    //的平行位置进行绘制 不受之前状态改变的影响   save() restore()二者缺一不可
+
+    ctx.fillRect(100,500,300,200) //如果之前的不用save() restore()包裹起来 他就受到了上一次图形绘制的影响 
+   
+</script>
+</html>

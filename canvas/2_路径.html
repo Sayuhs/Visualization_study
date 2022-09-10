@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+         #canvas{
+            background-color:antiquewhite;
+        }
+    </style>
+</head>
+<!-- 类似于线的概念 -->
+<body>
+    <canvas id="canvas" width="1000" height="800"></canvas>
+</body>
+<script>
+    /** @type {HTMLCanvasElement} */  
+    //默认使用canvas是没有代码提示的，这个时候可以添加上面这行就可以解决 
+     //画布
+    const canvas=document.getElementById('canvas')
+    canvas.width=window.innerWidth
+    canvas.height=window.innerHeight
+    //获取画笔  ( 就是建立一个二维渲染上下文)
+    const ctx=canvas.getContext('2d');
+
+    //设置线宽
+    ctx.lineWidth=10
+
+    //开始建立路径
+    ctx.beginPath()
+    //向路径集合中添加子路径
+    // 参数x 	起始位置的x坐标    y 起始位置的y坐标
+    ctx.moveTo(50,50)
+    // 参数x 	路径的目标位置的x坐标    y 路径的目标位置的y坐标
+    ctx.lineTo(400,50);  //这一行和上一行 就形成了一条线   x轴长度 400-50  y轴长度 50-50 这样就沿着x轴绘制了一条线
+    ctx.lineTo(400,100);  //这一行和上一行 就形成了一条线   x轴长度 400-400  y轴长度 100-50 这样就沿着y轴绘制了一条线
+    ctx.lineTo(500,200); 
+    //闭合路径  
+    ctx.closePath()   //就是最后一个点和第一个点进行连接
+    //显示路径  以描边的方式
+    ctx.stroke()
+</script>
+</html>

@@ -1,0 +1,72 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>你干嘛哎呦</title>
+    <!-- 引入 echarts.js -->
+    <script src="https://cdn.staticfile.org/echarts/4.7.0/echarts.min.js"></script>
+</head>
+<body>
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    <div id="main" style="width: 600px;height:400px;"></div>
+    <script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main'));
+
+        const data=[    
+            {
+                name:'拐子',
+                value:[10,10,10,10,10]  //基础战力 智慧 物抗 法抗 法强 
+            },
+            {
+                name:'野浩',
+                value:[60,90,20,20,70]
+            },
+            {
+                name:'洪少',
+                value:[90,10,90,90,70]
+            },
+            {
+                name:'苍蝇',
+                value:[20,30,30,90,90]
+            }
+        ]
+
+        const option={
+            title: {
+                text: '贵物属性一览',
+            },
+            legend:{}, //图例
+            /*雷达坐标系组件 radar
+            街达坐标系组件radar
+               indicator需达图的指示器集合[]
+                    name指示器名称
+                    min. max数据区间。实际数据会在此区间内计算比值
+                    color标签颜色
+               shape雷达形状
+                   polygon多边形。 默以
+                   circle圆形
+            */
+            radar:{
+                indicator:[
+                    {name:'战力',min:0,max:100},
+                    {name:'智慧',min:0,max:100},
+                    {name:'物抗',min:0,max:100},
+                    {name:'法抗',min:0,max:100},
+                    {name:'法强',min:0,max:100}
+                ]
+            },
+            series:{
+                type:'radar',
+                data, //外部定义的 同名同属性触发简写
+            },
+        }
+ 
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    </script>
+</body>
+</html>
+
+ 
